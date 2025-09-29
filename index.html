@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action Verb Quiz</title>
+    <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+    <div class="quiz-container">
+        <!-- Audio Enable Overlay -->
+        <div id="audio-overlay" class="audio-overlay" style="display: none;">
+            <div class="audio-overlay-content">
+                <div class="audio-icon">🔊</div>
+                <h3>Audio Available</h3>
+                <p>Hover over choice cards to hear pronunciation!</p>
+                <button onclick="enableAudioAndHide()" class="enable-audio-btn">
+                    <span>Enable Audio</span>
+                    <span class="btn-icon">🎵</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Modern Header -->
+        <header class="quiz-header">
+            <div class="header-content">
+                <div class="title-section">
+                    <h1 class="quiz-title">
+                        <span class="title-icon">⚡</span>
+                        Action Verbs Quiz
+                    </h1>
+                    <p class="quiz-subtitle">Master action verbs through visual learning</p>
+                </div>
+                <div class="progress-section">
+                    <div class="progress-indicator">
+                        <span class="progress-text">Question <span id="current-q">1</span> of <span id="total-q">10</span></span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                    </div>
+                    <div class="score-display">
+                        <span class="score-label">Score</span>
+                        <span class="score-value" id="current-score">0</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content Grid -->
+        <main class="quiz-main">
+            <div class="content-grid">
+                <!-- Image Section -->
+                <section class="image-section">
+                    <div class="image-wrapper">
+                        <div class="image-container">
+                            <img src="quiz_image.jpg.png" alt="Quiz Image" class="context-image" id="quiz-image" onclick="toggleZoom()">
+                            <div class="image-overlay">
+                                <div class="image-caption">Look at the image and identify the action verb</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Question Section -->
+                <section class="question-section">
+                    <div class="question-wrapper">
+                        <div class="question-header">
+                            <div class="question-number" id="question-number">1</div>
+                            <h2 class="question-text" id="question-text">Loading question...</h2>
+                        </div>
+                        
+                        <div class="choices-grid" id="choices-container"></div>
+                        
+                        <div class="feedback-container" id="feedback-text"></div>
+                        
+                        <div class="action-buttons">
+                            <button class="next-button" id="next-button" onclick="moveToNextQuestion()" style="display: none;">
+                                <span class="button-text">Next Question</span>
+                                <span class="button-icon">→</span>
+        </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- 1. Quiz Data Structure with AI Feedback ---
+        const quizQuestions = [
+            { 
+                question: "They are ______ in the water.", 
+                choices: ["swimming", "painting"], 
+                answer: "swimming",
+                explanation: "Swimming is an action verb that describes the movement in water. When people are in water moving their arms and legs to stay afloat and move forward, they are swimming.",
+                wrongFeedback: "Painting is also an action verb, but it involves using brushes and colors to create art, not moving through water.",
+                explanationPT: "Nadar é um verbo de ação que descreve o movimento na água. Quando as pessoas estão na água movendo os braços e pernas para flutuar e se mover para frente, elas estão nadando.",
+                wrongFeedbackPT: "Pintar também é um verbo de ação, mas envolve usar pincéis e cores para criar arte, não se mover pela água."
+            },
+            { 
+                question: "They are ______ on the grass.", 
+                choices: ["eating", "sleeping"], 
+                answer: "eating",
+                explanation: "Eating is an action verb that describes consuming food. When people have food in their hands and are putting it in their mouths, they are eating.",
+                wrongFeedback: "Sleeping is an action verb, but it means resting with eyes closed. These people are actively consuming food, not resting.",
+                explanationPT: "Comer é um verbo de ação que descreve consumir comida. Quando as pessoas têm comida nas mãos e estão colocando na boca, elas estão comendo.",
+                wrongFeedbackPT: "Dormir também é um verbo de ação, mas significa descansar com os olhos fechados. Essas pessoas estão ativamente consumindo comida, não descansando."
+            },
+            { 
+                question: "The dogs are ______.", 
+                choices: ["running", "drawing"], 
+                answer: "running",
+                explanation: "Running is an action verb that describes fast movement on legs. Dogs running means they are moving quickly across the ground using their four legs.",
+                wrongFeedback: "Drawing is an action verb, but it involves creating art with pencils or crayons. Dogs don't draw - they move around by running.",
+                explanationPT: "Correr é um verbo de ação que descreve movimento rápido nas pernas. Cachorros correndo significa que eles estão se movendo rapidamente pelo chão usando suas quatro patas.",
+                wrongFeedbackPT: "Desenhar também é um verbo de ação, mas envolve criar arte com lápis ou giz de cera. Cachorros não desenham - eles se movem correndo."
+            },
+            { 
+                question: "She is ______ off the dock.", 
+                choices: ["diving", "sitting"], 
+                answer: "diving",
+                explanation: "Diving is an action verb that describes jumping headfirst into water. When someone jumps off a dock into water with their arms extended, they are diving.",
+                wrongFeedback: "Sitting is an action verb, but it means being in a seated position. This person is jumping into the water, not sitting down.",
+                explanationPT: "Mergulhar é um verbo de ação que descreve pular de cabeça na água. Quando alguém pula de um cais na água com os braços estendidos, ela está mergulhando.",
+                wrongFeedbackPT: "Sentar também é um verbo de ação, mas significa estar em posição sentada. Esta pessoa está pulando na água, não sentando."
+            },
+            { 
+                question: "The turtle is ______ in the dirt.", 
+                choices: ["digging", "sleeping"], 
+                answer: "digging",
+                explanation: "Digging is an action verb that describes using claws or tools to move earth. Turtles dig holes in dirt to find food or create nests.",
+                wrongFeedback: "Sleeping is an action verb, but it means resting. This turtle is actively moving dirt around, not resting."
+            },
+            { 
+                question: "The children are ______ sandwiches.", 
+                choices: ["eating", "throwing"], 
+                answer: "eating",
+                explanation: "Eating is an action verb that describes consuming food. When children have sandwiches in their hands and are putting them in their mouths, they are eating.",
+                wrongFeedback: "Throwing is an action verb, but it means launching something through the air. These children are consuming food, not throwing it away."
+            },
+            { 
+                question: "The sun is ______ brightly.", 
+                choices: ["shining", "hiding"], 
+                answer: "shining",
+                explanation: "Shining is an action verb that describes giving off bright light. The sun shines when it emits bright, warm light during the day.",
+                wrongFeedback: "Hiding is an action verb, but it means concealing or being out of sight. The sun is visible and giving off light, not hiding."
+            },
+            { 
+                question: "The dogs are ______ around the park.", 
+                choices: ["playing", "sleeping"], 
+                answer: "playing",
+                explanation: "Playing is an action verb that describes engaging in fun activities. Dogs playing means they are running around, jumping, and having fun together.",
+                wrongFeedback: "Sleeping is an action verb, but it means resting. These dogs are actively moving and having fun, not resting."
+            },
+            { 
+                question: "The children are ______ near the water.", 
+                choices: ["playing", "studying"], 
+                answer: "playing",
+                explanation: "Playing is an action verb that describes engaging in fun activities. Children playing means they are running around, laughing, and having fun together.",
+                wrongFeedback: "Studying is an action verb, but it means learning from books or materials. These children are having fun outdoors, not studying."
+            },
+            { 
+                question: "Someone is ______ a ball.", 
+                choices: ["throwing", "eating"], 
+                answer: "throwing",
+                explanation: "Throwing is an action verb that describes launching something through the air using your arm. When someone uses their arm to send a ball through the air, they are throwing it.",
+                wrongFeedback: "Eating is an action verb, but it means consuming food. You can't eat a ball - you throw it to play games."
+            },
+        ];
+
+        // --- 2. Game State Variables ---
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false; 
+        let audioEnabled = true; // Audio toggle
+
+        // --- 3. DOM Element References ---
+        const questionTextEl = document.getElementById('question-text');
+        const choicesContainerEl = document.getElementById('choices-container');
+        const feedbackEl = document.getElementById('feedback-text');
+        const nextButtonEl = document.getElementById('next-button');
+        const currentQEl = document.getElementById('current-q');
+        const totalQEl = document.getElementById('total-q');
+        const progressFillEl = document.getElementById('progress-fill');
+        const questionNumberEl = document.getElementById('question-number');
+        const currentScoreEl = document.getElementById('current-score');
+
+        // --- 4. Helper Function: Randomize Array Order ---
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // --- 5. Main Function: Display Question and Choices ---
+        function displayQuestion() {
+            answered = false;
+            feedbackEl.textContent = ''; 
+            nextButtonEl.style.display = 'none'; 
+
+            if (currentQuestionIndex >= quizQuestions.length) {
+                // Quiz is finished
+                endQuiz();
+                return;
+            }
+
+            const currentQ = quizQuestions[currentQuestionIndex];
+            questionTextEl.textContent = currentQ.question;
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            currentQEl.textContent = currentQuestionIndex + 1;
+            totalQEl.textContent = quizQuestions.length;
+            currentScoreEl.textContent = score;
+            
+            // Update progress bar
+            const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+            progressFillEl.style.width = progress + '%';
+            
+            choicesContainerEl.innerHTML = ''; 
+
+            let shuffledChoices = [...currentQ.choices]; 
+            shuffle(shuffledChoices); 
+
+            shuffledChoices.forEach((choice, index) => {
+                const card = document.createElement('div');
+                card.classList.add('choice-card');
+                card.innerHTML = `
+                    <span class="choice-text">${choice}</span>
+                    <span class="choice-icon">${String.fromCharCode(65 + index)}</span>
+                `;
+                
+                // Add audio functionality
+                card.addEventListener('click', () => {
+                    // Enable audio on first click
+                    enableAudio();
+                    // Play audio for the word clicked
+                    speakText(choice, 'en-US');
+                    handleAnswer(card, choice, currentQ.answer);
+                });
+                
+                // Add hover audio preview
+                card.addEventListener('mouseenter', () => {
+                    console.log('Hover detected on:', choice, 'Audio enabled:', audioEnabled);
+                    if (audioEnabled && audioEnabledByUser) {
+                        speakText(choice, 'en-US');
+                    } else if (audioEnabled && !audioEnabledByUser) {
+                        // Show overlay to enable audio
+                        document.getElementById('audio-overlay').style.display = 'flex';
+                    }
+                });
+                
+                choicesContainerEl.appendChild(card);
+            });
+        }
+
+        // --- 6. Audio Functions ---
+        let audioInitialized = false;
+        let audioEnabledByUser = false;
+        
+        function enableAudio() {
+            if (!audioEnabledByUser) {
+                // Enable audio without playing a message
+                audioEnabledByUser = true;
+                audioInitialized = true;
+                console.log('Audio enabled by user interaction');
+            }
+        }
+        
+        function enableAudioAndHide() {
+            enableAudio();
+            document.getElementById('audio-overlay').style.display = 'none';
+        }
+        
+        function speakText(text, language = 'en-US') {
+            if (!audioEnabled) {
+                console.log('Audio disabled');
+                return;
+            }
+            
+            if (!audioEnabledByUser) {
+                console.log('Audio not enabled by user yet');
+                return;
+            }
+            
+            console.log('Speaking:', text);
+            
+            // Cancel any ongoing speech
+            if (window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+            }
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = language;
+            utterance.rate = 0.8;
+            utterance.pitch = 1.0;
+            utterance.volume = 0.8;
+            
+            // Add event listeners for debugging
+            utterance.onstart = () => console.log('Audio started:', text);
+            utterance.onend = () => console.log('Audio ended:', text);
+            utterance.onerror = (event) => console.log('Audio error:', event.error);
+            
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            const audioBtn = document.getElementById('audio-btn');
+            if (audioEnabled) {
+                audioBtn.textContent = '🔊 Audio On';
+                audioBtn.style.background = '#28a745';
+            } else {
+                audioBtn.textContent = '🔇 Audio Off';
+                audioBtn.style.background = '#6c757d';
+                // Stop any ongoing speech
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        // --- 7. Event Handler: Check Answer ---
+        function handleAnswer(cardElement, selectedAnswer, correctAnswer) {
+            if (answered) return; 
+            answered = true;
+
+            const currentQ = quizQuestions[currentQuestionIndex];
+
+            if (selectedAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+                cardElement.classList.add('correct');
+                
+                // Play success audio
+                speakText("Excellent! " + correctAnswer, 'en-US');
+                feedbackEl.innerHTML = `
+                    <div class="feedback-correct">
+                        <div class="feedback-header">✅ <strong>Excellent!</strong></div>
+                        <div class="feedback-explanation">${currentQ.explanation}</div>
+                        <div class="feedback-reinforcement">You correctly identified the action verb! This shows you understand how verbs describe actions.</div>
+                    </div>
+                `;
+                score++;
+            } else {
+                cardElement.classList.add('incorrect');
+                
+                // Play correction audio
+                speakText("The correct answer is " + correctAnswer, 'en-US');
+                feedbackEl.innerHTML = `
+                    <div class="feedback-incorrect">
+                        <div class="feedback-header">❌ <strong>Let's learn together!</strong></div>
+                        <div class="feedback-wrong">Your answer: "<strong>${selectedAnswer}</strong>" - ${currentQ.wrongFeedback}</div>
+                        <div class="feedback-correct-answer">Correct answer: "<strong>${correctAnswer}</strong>" - ${currentQ.explanation}</div>
+                        <div class="feedback-reinforcement">💡 <strong>Remember:</strong> Action verbs describe what someone or something is doing. Look at the image carefully to see what action is happening!</div>
+                    </div>
+                `;
+                
+                // Highlight the correct answer
+                Array.from(choicesContainerEl.children).forEach(child => {
+                    if (child.textContent.toLowerCase() === correctAnswer.toLowerCase()) {
+                        child.classList.add('correct');
+                    }
+                });
+            }
+
+            // Disable all cards
+            Array.from(choicesContainerEl.children).forEach(child => {
+                child.classList.add('disabled');
+            });
+
+            nextButtonEl.style.display = 'block'; 
+        }
+
+        // --- 7. Event Handler: Move to Next Question ---
+        function moveToNextQuestion() {
+            currentQuestionIndex++;
+            displayQuestion();
+        }
+
+        // --- 8. Function: End Quiz ---
+        function endQuiz() {
+            const percentage = Math.round((score / quizQuestions.length) * 100);
+            let grade = '';
+            let message = '';
+            let supportingMessage = '';
+            let celebrationEmoji = '';
+            
+            // Grade calculation with enhanced messages
+            if (percentage >= 90) {
+                grade = 'A+';
+                message = 'Outstanding Performance! 🌟';
+                supportingMessage = 'You have mastered action verbs! Your understanding is exceptional and you can identify different actions with confidence. Keep up the excellent work!';
+                celebrationEmoji = '🎉🏆🎊';
+            } else if (percentage >= 80) {
+                grade = 'A';
+                message = 'Excellent Work! 👏';
+                supportingMessage = 'You have a strong grasp of action verbs! You can clearly identify and understand different actions. You\'re doing great!';
+                celebrationEmoji = '🎉🎊';
+            } else if (percentage >= 70) {
+                grade = 'B';
+                message = 'Good Job! 👍';
+                supportingMessage = 'You have a solid understanding of action verbs! You\'re on the right track and with a bit more practice, you\'ll master them completely.';
+                celebrationEmoji = '🎉';
+            } else if (percentage >= 60) {
+                grade = 'C';
+                message = 'Nice Try! 📚';
+                supportingMessage = 'You\'re making progress with action verbs! Keep practicing and reviewing - you\'ll get better with each attempt. Don\'t give up!';
+                celebrationEmoji = '💪';
+            } else {
+                grade = 'D';
+                message = 'Keep Learning! 💪';
+                supportingMessage = 'Action verbs can be tricky, but don\'t worry! Every expert was once a beginner. Practice makes perfect - try again and you\'ll improve!';
+                celebrationEmoji = '📖';
+            }
+            
+            questionTextEl.textContent = "Quiz Complete! " + celebrationEmoji;
+            choicesContainerEl.innerHTML = `
+                <div class="final-results">
+                    <div class="congratulations">
+                        <h2>Congratulations!</h2>
+                        <div class="celebration">${celebrationEmoji}</div>
+                    </div>
+                    
+                    <div class="results-summary">
+                        <h3>Your Results</h3>
+                        <div class="score-display">
+                            <div class="score-circle">
+                                <span class="score-number">${score}</span>
+                                <span class="score-total">/ ${quizQuestions.length}</span>
+                            </div>
+                            <div class="grade-info">
+                                <div class="percentage">${percentage}%</div>
+                                <div class="grade">Grade: ${grade}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="feedback-section">
+                        <h4>${message}</h4>
+                        <p class="supporting-message">${supportingMessage}</p>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button onclick="restartQuiz()" class="restart-button">🔄 Take Quiz Again</button>
+                        <button onclick="window.location.reload()" class="new-session-button">🆕 New Session</button>
+                    </div>
+                </div>
+            `;
+            feedbackEl.textContent = '';
+            nextButtonEl.style.display = 'none';
+        }
+
+        // --- 9. Image Enhancement Functions ---
+        let isEnhanced = false;
+        let isZoomed = false;
+
+        function enhanceImage() {
+            const img = document.getElementById('quiz-image');
+            if (!isEnhanced) {
+                img.style.filter = 'contrast(1.4) brightness(1.15) saturate(1.4) hue-rotate(3deg)';
+                img.style.transform = 'scale(1.05)';
+                img.style.transition = 'all 0.3s ease';
+                isEnhanced = true;
+            } else {
+                resetImage();
+            }
+        }
+
+        function resetImage() {
+            const img = document.getElementById('quiz-image');
+            img.style.filter = 'contrast(1.2) brightness(1.1) saturate(1.2) hue-rotate(2deg)';
+            img.style.transform = 'scale(1)';
+            img.style.transition = 'all 0.3s ease';
+            isEnhanced = false;
+            isZoomed = false;
+        }
+
+        function toggleZoom() {
+            const img = document.getElementById('quiz-image');
+            if (!isZoomed) {
+                img.style.transform = 'scale(1.5)';
+                img.style.cursor = 'zoom-out';
+                img.style.transition = 'all 0.3s ease';
+                isZoomed = true;
+            } else {
+                img.style.transform = isEnhanced ? 'scale(1.05)' : 'scale(1)';
+                img.style.cursor = 'zoom-in';
+                img.style.transition = 'all 0.3s ease';
+                isZoomed = false;
+            }
+        }
+
+        // --- 10. Restart Quiz Function ---
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            answered = false;
+            displayQuestion();
+        }
+
+        // --- 11. High Quality Image Loading ---
+        function loadHighQualityImage() {
+            const img = document.getElementById('quiz-image');
+            img.onload = function() {
+                // Force high quality rendering after load
+                this.style.imageRendering = 'high-quality';
+                this.style.imageRendering = '-webkit-optimize-contrast';
+            };
+        }
+
+        // --- 11. Initialization ---
+        nextButtonEl.addEventListener('click', moveToNextQuestion);
+        document.addEventListener('DOMContentLoaded', function() {
+            displayQuestion();
+            loadHighQualityImage();
+            
+            console.log('Page loaded, audio enabled:', audioEnabled);
+            console.log('Speech synthesis available:', 'speechSynthesis' in window);
+        });
+    </script>
+    </body>
+</html>
