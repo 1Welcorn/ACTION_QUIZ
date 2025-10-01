@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Are You Late? - Workplace Punctuality Quiz</title>
+    <title>Are You Late? - Workplace Punctuality Quiz v3.0</title>
     <style>
         /* Reset and Base Styles */
         * {
@@ -21,643 +21,647 @@
         }
 
         .quiz-container {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background: rgba(248, 250, 252, 0.95);
-            backdrop-filter: blur(10px);
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
 
         .quiz-header {
             background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 50%, #374151 100%);
             color: white;
-            padding: 1.5rem 2rem;
-            box-shadow: 0 0 30px rgba(30, 64, 175, 0.2);
+            padding: 2rem;
+            text-align: center;
             border-bottom: 3px solid #fbbf24;
         }
 
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            gap: 2rem;
-        }
-
         .quiz-title {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            letter-spacing: -0.025em;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-        }
-
-        .title-icon {
-            font-size: 2.8rem;
-            animation: clockPulse 2s infinite;
-            filter: drop-shadow(0 0 10px #fbbf24);
-        }
-
-        @keyframes clockPulse {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.05) rotate(5deg); }
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .quiz-subtitle {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             opacity: 0.9;
             font-weight: 400;
-            letter-spacing: 0.025em;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-        }
-
-        .quiz-main {
-            flex: 1;
-            display: flex;
-            overflow: hidden;
-        }
-
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            width: 100%;
-            height: 100%;
-            gap: 0;
         }
 
         .video-section {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: #f8fafc;
             padding: 2rem;
-            position: relative;
-            overflow: hidden;
+            border-bottom: 1px solid #e5e7eb;
         }
 
         .video-container {
             position: relative;
             width: 100%;
-            height: 100%;
-            max-width: 600px;
-            max-height: 500px;
-            border-radius: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 0 30px rgba(30, 64, 175, 0.2);
-            transition: transform 0.25s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             border: 3px solid #fbbf24;
         }
 
-        .context-video {
+        .video-container iframe {
             width: 100%;
-            height: 100%;
+            height: 450px;
             border: none;
-            border-radius: 1.5rem;
+        }
+
+        .video-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .video-btn {
+            background: #1e40af;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .video-btn:hover {
+            background: #1e3a8a;
+            transform: translateY(-2px);
+        }
+
+        .quiz-content {
+            padding: 2rem;
         }
 
         .question-section {
-            background: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.9) 100%);
-            backdrop-filter: blur(20px);
-            display: flex;
-            flex-direction: column;
-            padding: 3rem;
-            overflow-y: auto;
-            border-left: 3px solid #fbbf24;
-        }
-
-        .question-wrapper {
-            max-width: 600px;
-            margin: 0 auto;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .question-header {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .question-number {
-            display: inline-block;
-            background: linear-gradient(135deg, #1e40af, #3b82f6);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 0 20px rgba(30, 64, 175, 0.4);
-            border: 2px solid #fbbf24;
+            background: #f1f5f9;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #fbbf24;
         }
 
         .question-text {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 600;
             color: #1f2937;
-            line-height: 1.4;
             margin-bottom: 1.5rem;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            line-height: 1.4;
         }
 
-        .choices-grid {
+        .choices-container {
             display: grid;
             gap: 1rem;
             margin-bottom: 2rem;
         }
 
-        .choice-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%);
-            border: 2px solid rgba(30, 64, 175, 0.2);
-            border-radius: 1rem;
-            padding: 1.5rem 2rem;
+        .choice-btn {
+            background: white;
+            border: 2px solid #e5e7eb;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.25s ease;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-            backdrop-filter: blur(10px);
-        }
-
-        .choice-card:hover {
-            border-color: #fbbf24;
-            transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, rgba(255, 255, 255, 0.9) 100%);
-        }
-
-        .choice-text {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 500;
-            color: #1f2937;
-            flex: 1;
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-align: left;
         }
 
-        .choice-icon {
-            background: linear-gradient(135deg, #1e40af, #3b82f6);
-            color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.25s ease;
-            box-shadow: 0 0 10px rgba(30, 64, 175, 0.3);
+        .choice-btn:hover {
+            border-color: #1e40af;
+            background: #f8fafc;
+            transform: translateY(-2px);
         }
 
-        .choice-card:hover .choice-icon {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+        .choice-btn.selected {
+            border-color: #1e40af;
+            background: #dbeafe;
+            color: #1e40af;
         }
 
-        .feedback-container {
-            background: linear-gradient(135deg, rgba(248, 250, 252, 0.9) 0%, rgba(241, 245, 249, 0.8) 100%);
-            border-radius: 1rem;
-            padding: 2rem;
+        .choice-btn.correct {
+            border-color: #059669;
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .choice-btn.incorrect {
+            border-color: #dc2626;
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .feedback-section {
+            background: #f0f9ff;
+            padding: 1.5rem;
+            border-radius: 10px;
             margin-bottom: 2rem;
-            border-left: 4px solid #fbbf24;
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(30, 64, 175, 0.1);
+            border-left: 4px solid #0288d1;
         }
 
-        .action-buttons {
-            margin-top: auto;
+        .feedback-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #1e40af;
+            margin-bottom: 1rem;
+        }
+
+        .explanation-text {
+            font-size: 1rem;
+            color: #4b5563;
+            line-height: 1.5;
+        }
+
+        .controls {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
         }
 
-        .next-button {
-            background: linear-gradient(135deg, #1e40af, #3b82f6);
+        .btn {
+            background: #1e40af;
             color: white;
             border: none;
-            padding: 1.5rem 2rem;
-            border-radius: 1rem;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
             font-size: 1.1rem;
             font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #1e3a8a;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1e40af, #059669);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .score-display {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f8fafc, #e0f2fe);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e40af, #059669);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 1rem;
+            box-shadow: 0 10px 30px rgba(30, 64, 175, 0.3);
+        }
+
+        .score-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .score-total {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .final-message {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 1rem;
+        }
+
+        .restart-btn {
+            background: #059669;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.25s ease;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            background: #047857;
+            transform: translateY(-2px);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .audio-overlay {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(30, 64, 175, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            font-size: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 1rem;
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-            border: 2px solid #fbbf24;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
         }
 
-        .next-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(30, 64, 175, 0.3);
+        .audio-overlay:hover {
+            background: rgba(30, 64, 175, 1);
+            transform: scale(1.1);
         }
 
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .content-grid {
-                grid-template-columns: 1fr;
-                grid-template-rows: 1fr 1fr;
-            }
-            
-            .quiz-title {
-                font-size: 2rem;
-            }
-            
-            .header-content {
-                flex-direction: column;
-                gap: 1.5rem;
-                text-align: center;
-            }
+        .audio-overlay:active {
+            transform: scale(0.95);
         }
 
         @media (max-width: 768px) {
-            .quiz-header {
-                padding: 1.5rem;
+            .quiz-container {
+                margin: 10px;
+                border-radius: 15px;
             }
-            
+
             .quiz-title {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
-            
-            .question-section {
-                padding: 1.5rem;
+
+            .quiz-subtitle {
+                font-size: 1rem;
             }
-            
+
+            .video-container iframe {
+                height: 250px;
+            }
+
             .question-text {
-                font-size: 1.5rem;
+                font-size: 1.2rem;
+            }
+
+            .choice-btn {
+                font-size: 1rem;
+                padding: 0.75rem 1rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
+    <button class="audio-overlay" onclick="toggleAudio()" title="Toggle Audio">⏰</button>
+    
     <div class="quiz-container">
-        <!-- Audio Enable Overlay -->
-        <div id="audio-overlay" class="audio-overlay" style="display: none;">
-            <div class="audio-overlay-content">
-                <div class="audio-icon">⏰</div>
-                <h3>Audio Available</h3>
-                <p>Hover over choice cards to hear pronunciation!</p>
-                <button onclick="enableAudioAndHide()" class="enable-audio-btn">
-                    <span>Enable Audio</span>
-                    <span class="btn-icon">🎵</span>
-                </button>
+        <div class="quiz-header">
+            <h1 class="quiz-title">⏰ Are You Late? Quiz</h1>
+            <p class="quiz-subtitle">Test your knowledge about workplace punctuality and excuses</p>
+        </div>
+
+        <div class="video-section">
+            <div class="video-container">
+                <iframe 
+                    id="quizVideo"
+                    src="https://www.youtube.com/embed/mCS6_G5hOKU" 
+                    frameborder="0" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div class="video-controls">
+                <button class="video-btn" onclick="pauseVideo()">⏸️ Pause</button>
+                <button class="video-btn" onclick="playVideo()">▶️ Play</button>
+                <button class="video-btn" onclick="restartVideo()">🔄 Restart</button>
             </div>
         </div>
-        
-        <!-- Modern Header -->
-        <header class="quiz-header">
-            <div class="header-content">
-                <div class="title-section">
-                    <h1 class="quiz-title">
-                        <span class="title-icon">⏰</span>
-                        Are You Late? Quiz
-                    </h1>
-                    <p class="quiz-subtitle">Test your knowledge about workplace punctuality and excuses</p>
-                </div>
-                <div class="progress-section">
-                    <div class="progress-indicator">
-                        <span class="progress-text">Question <span id="current-q">1</span> of <span id="total-q">10</span></span>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="progress-fill"></div>
-                        </div>
-                    </div>
-                    <div class="score-display">
-                        <span class="score-label">Score</span>
-                        <span class="score-value" id="current-score">0</span>
-                    </div>
+
+        <div class="quiz-content">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div id="questionContainer" class="question-section">
+                <div class="question-text" id="questionText"></div>
+                <div class="choices-container" id="choicesContainer"></div>
+                <div class="feedback-section hidden" id="feedbackSection">
+                    <div class="feedback-text" id="feedbackText"></div>
+                    <div class="explanation-text" id="explanationText"></div>
                 </div>
             </div>
-        </header>
-        
-        <!-- Main Content Grid -->
-        <main class="quiz-main">
-            <div class="content-grid">
-                <!-- Video Section -->
-                <section class="video-section">
-                    <div class="video-wrapper">
-                        <div class="video-container">
-                            <iframe 
-                                id="quiz-video"
-                                src="https://www.youtube.com/embed/mCS6_G5hOKU?autoplay=0&controls=1&showinfo=0&rel=0&modestbranding=1"
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen
-                                class="context-video">
-                            </iframe>
-                        </div>
-                    </div>
-                </section>
-                
-                <!-- Question Section -->
-                <section class="question-section">
-                    <div class="question-wrapper">
-                        <div class="question-header">
-                            <div class="question-number" id="question-number">1</div>
-                            <h2 class="question-text" id="question-text">Loading question...</h2>
-                        </div>
-                        
-                        <div class="choices-grid" id="choices-container"></div>
-                        
-                        <div class="feedback-container" id="feedback-text"></div>
-                        
-                        <div class="action-buttons">
-                            <button class="next-button" id="next-button" onclick="moveToNextQuestion()" style="display: none;">
-                                <span class="button-text">Next Question</span>
-                                <span class="button-icon">→</span>
-                            </button>
-                        </div>
-                    </div>
-                </section>
+
+            <div class="controls">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>← Previous</button>
+                <button class="btn" id="nextBtn" onclick="nextQuestion()">Next →</button>
             </div>
-        </main>
+
+            <div class="score-display hidden" id="scoreDisplay">
+                <div class="score-circle">
+                    <div class="score-number" id="scoreNumber">0</div>
+                    <div class="score-total">/ 11</div>
+                </div>
+                <div class="final-message" id="finalMessage"></div>
+                <button class="restart-btn" onclick="restartQuiz()">🔄 Take Quiz Again</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Quiz Data Structure - Being Late Theme
+        // Quiz data
         const quizQuestions = [
-            { 
-                question: "What is the video about?", 
-                choices: ["being late", "being on time"], 
-                answer: "being late",
-                explanation: "The video focuses on the topic of being late to work and the various excuses people use. It explores workplace punctuality issues and their consequences."
+            {
+                question: "What is the video about?",
+                choices: ["being late", "being on time"],
+                correct: 0,
+                explanation: "The video focuses on the common problem of being late to work and the various excuses people use."
             },
-            { 
-                question: "What percentage of employees are late to work at least once a month?", 
-                choices: ["10%", "30%"], 
-                answer: "30%",
-                explanation: "According to the video, 30% of employees are late to work at least once a month. This shows that lateness is a common workplace issue."
+            {
+                question: "What percentage of employees are late to work at least once a month?",
+                choices: ["10%", "30%"],
+                correct: 1,
+                explanation: "According to the video, 30% of employees are late to work at least once a month."
             },
-            { 
-                question: "What is the most common excuse for being late?", 
-                choices: ["traffic", "sick"], 
-                answer: "traffic",
-                explanation: "Traffic is the most common excuse people give for being late to work. It's a convenient excuse that's hard to verify."
+            {
+                question: "What is the most common excuse for being late?",
+                choices: ["traffic", "sick"],
+                correct: 0,
+                explanation: "Traffic is mentioned as the most common excuse people give for being late to work."
             },
-            { 
-                question: "In New York, what excuse do people often give for being late?", 
-                choices: ["the subway", "the weather"], 
-                answer: "the subway",
-                explanation: "In New York, people often blame the subway system for their lateness. Subway delays are a common occurrence in the city."
+            {
+                question: "In New York, what excuse do people often give for being late?",
+                choices: ["the subway", "the weather"],
+                correct: 0,
+                explanation: "In New York, people often blame the subway system for their lateness."
             },
-            { 
-                question: "What percentage blame oversleeping?", 
-                choices: ["10%", "30%"], 
-                answer: "more than 30%",
-                explanation: "More than 30% of people blame oversleeping for being late. This shows that poor time management and sleep habits contribute to lateness."
+            {
+                question: "What percentage blame oversleeping?",
+                choices: ["10%", "more than 30%"],
+                correct: 1,
+                explanation: "More than 30% of people blame oversleeping for being late to work."
             },
-            { 
-                question: "What unusual animal was used in an excuse?", 
-                choices: ["dog", "turtle"], 
-                answer: "turtle",
-                explanation: "Someone used a turtle as an excuse for being late. This is an unusual and creative excuse that was mentioned in the video."
+            {
+                question: "What unusual animal was used in an excuse?",
+                choices: ["dog", "turtle"],
+                correct: 1,
+                explanation: "Someone actually used a turtle as an excuse for being late!"
             },
-            { 
-                question: "What did someone blame for being late: their mother-in-law or the president?", 
-                choices: ["mother-in-law", "president"], 
-                answer: "mother-in-law",
-                explanation: "Someone actually blamed their mother-in-law for being late to work. This shows how creative people can get with their excuses."
+            {
+                question: "What did someone blame for being late: their mother-in-law or the president?",
+                choices: ["mother-in-law", "president"],
+                correct: 0,
+                explanation: "Someone actually blamed their mother-in-law for making them late to work."
             },
-            { 
-                question: "What sport was mentioned as a reason for being late?", 
-                choices: ["soccer", "baseball"], 
-                answer: "soccer",
-                explanation: "Soccer was mentioned as a reason for being late. People sometimes use sports-related excuses for their workplace lateness."
+            {
+                question: "What sport was mentioned as a reason for being late?",
+                choices: ["soccer", "baseball"],
+                correct: 0,
+                explanation: "Soccer was mentioned as one of the excuses people use for being late."
             },
-            { 
-                question: "How do some people make up for being late?", 
-                choices: ["leave early", "stay longer"], 
-                answer: "stay longer",
-                explanation: "Some people try to make up for being late by staying longer at work. This is an attempt to compensate for their tardiness."
+            {
+                question: "How do some people make up for being late?",
+                choices: ["leave early", "stay longer"],
+                correct: 1,
+                explanation: "Some people try to make up for being late by staying longer at work."
             },
-            { 
-                question: "What do 40% of bosses do to employees who are often late?", 
-                choices: ["give a raise", "fire them"], 
-                answer: "fire them",
-                explanation: "40% of bosses fire employees who are often late. This shows the serious consequences of chronic lateness in the workplace."
+            {
+                question: "What do 40% of bosses do to employees who are often late?",
+                choices: ["give a raise", "fire them"],
+                correct: 1,
+                explanation: "40% of bosses fire employees who are consistently late to work."
+            },
+            {
+                question: "What is a funny excuse you could use for being late?",
+                choices: ["Open-ended question", "No excuse needed"],
+                correct: 0,
+                explanation: "This is an open-ended question where you can be creative with your excuse!"
             }
         ];
 
-        // Game State Variables
-        let currentQuestionIndex = 0;
+        let currentQuestion = 0;
         let score = 0;
-        let answered = false;
+        let userAnswers = [];
+        let audioEnabled = true;
 
-        // DOM Element References
-        const questionTextEl = document.getElementById('question-text');
-        const choicesContainerEl = document.getElementById('choices-container');
-        const feedbackEl = document.getElementById('feedback-text');
-        const nextButtonEl = document.getElementById('next-button');
-        const currentQEl = document.getElementById('current-q');
-        const totalQEl = document.getElementById('total-q');
-        const progressFillEl = document.getElementById('progress-fill');
-        const questionNumberEl = document.getElementById('question-number');
-        const currentScoreEl = document.getElementById('current-score');
-
-        // Helper Function: Randomize Array Order
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
+        // Initialize quiz
+        function initQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = [];
+            showQuestion();
+            updateProgress();
+            setupVideo();
         }
 
-        // Main Function: Display Question and Choices
-        function displayQuestion() {
-            answered = false;
-            feedbackEl.textContent = ''; 
-            nextButtonEl.style.display = 'none'; 
+        // Show current question
+        function showQuestion() {
+            const question = quizQuestions[currentQuestion];
+            document.getElementById('questionText').textContent = question.question;
+            
+            const choicesContainer = document.getElementById('choicesContainer');
+            choicesContainer.innerHTML = '';
+            
+            question.choices.forEach((choice, index) => {
+                const button = document.createElement('button');
+                button.className = 'choice-btn';
+                button.textContent = choice;
+                button.onclick = () => selectChoice(index);
+                choicesContainer.appendChild(button);
+            });
+            
+            document.getElementById('feedbackSection').classList.add('hidden');
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            document.getElementById('nextBtn').textContent = currentQuestion === quizQuestions.length - 1 ? 'Finish Quiz' : 'Next →';
+        }
 
-            if (currentQuestionIndex >= quizQuestions.length) {
-                endQuiz();
+        // Select a choice
+        function selectChoice(choiceIndex) {
+            const buttons = document.querySelectorAll('.choice-btn');
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            buttons[choiceIndex].classList.add('selected');
+            
+            userAnswers[currentQuestion] = choiceIndex;
+        }
+
+        // Next question
+        function nextQuestion() {
+            if (userAnswers[currentQuestion] === undefined) {
+                alert('Please select an answer before proceeding.');
                 return;
             }
-
-            const currentQ = quizQuestions[currentQuestionIndex];
-            questionTextEl.textContent = currentQ.question;
-            questionNumberEl.textContent = currentQuestionIndex + 1;
-            currentQEl.textContent = currentQuestionIndex + 1;
-            totalQEl.textContent = quizQuestions.length;
-            currentScoreEl.textContent = score;
             
-            // Update progress bar
-            const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
-            progressFillEl.style.width = progress + '%';
-            
-            choicesContainerEl.innerHTML = ''; 
-
-            let shuffledChoices = [...currentQ.choices]; 
-            shuffle(shuffledChoices); 
-
-            shuffledChoices.forEach((choice, index) => {
-                const card = document.createElement('div');
-                card.classList.add('choice-card');
-                card.innerHTML = `
-                    <span class="choice-text">${choice}</span>
-                    <span class="choice-icon">${String.fromCharCode(65 + index)}</span>
-                `;
-                
-                card.addEventListener('click', () => {
-                    handleAnswer(card, choice, currentQ.answer);
-                });
-                
-                choicesContainerEl.appendChild(card);
-            });
-        }
-
-        // Event Handler: Check Answer
-        function handleAnswer(cardElement, selectedAnswer, correctAnswer) {
-            if (answered) return; 
-            answered = true;
-
-            const currentQ = quizQuestions[currentQuestionIndex];
-
-            if (selectedAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
-                cardElement.classList.add('correct');
-                cardElement.style.background = 'linear-gradient(135deg, rgba(5, 150, 105, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%)';
-                cardElement.style.borderColor = '#059669';
-                feedbackEl.innerHTML = `
-                    <div style="color: #059669; font-weight: 600; margin-bottom: 1rem;">
-                        <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">⏰ <strong>Excellent!</strong></div>
-                        <div style="color: #4b5563; line-height: 1.6; margin-bottom: 1rem;">${currentQ.explanation}</div>
-                        <div style="color: #6b7280; font-style: italic; font-size: 0.95rem;">You correctly answered about workplace punctuality! This shows you understand the importance of being on time.</div>
-                    </div>
-                `;
-                score++;
-            } else {
-                cardElement.classList.add('incorrect');
-                cardElement.style.background = 'linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%)';
-                cardElement.style.borderColor = '#dc2626';
-                feedbackEl.innerHTML = `
-                    <div style="color: #dc2626; font-weight: 600; margin-bottom: 1rem;">
-                        <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">⏰ <strong>Let's learn together!</strong></div>
-                        <div style="color: #4b5563; line-height: 1.6; margin-bottom: 1rem;">Your answer: "<strong>${selectedAnswer}</strong>" - While this is a valid reason, the correct answer is different.</div>
-                        <div style="color: #059669; font-weight: 600; margin-bottom: 1rem;">Correct answer: "<strong>${correctAnswer}</strong>" - ${currentQ.explanation}</div>
-                        <div style="color: #6b7280; font-style: italic; font-size: 0.95rem;">💼 <strong>Remember:</strong> Workplace punctuality is important! Being on time shows professionalism and respect for others.</div>
-                    </div>
-                `;
-                
-                // Highlight the correct answer
-                Array.from(choicesContainerEl.children).forEach(child => {
-                    if (child.textContent.toLowerCase().includes(correctAnswer.toLowerCase())) {
-                        child.style.background = 'linear-gradient(135deg, rgba(5, 150, 105, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%)';
-                        child.style.borderColor = '#059669';
-                    }
-                });
-            }
-
-            // Disable all cards
-            Array.from(choicesContainerEl.children).forEach(child => {
-                child.style.opacity = '0.6';
-                child.style.cursor = 'not-allowed';
-            });
-
-            nextButtonEl.style.display = 'block'; 
-        }
-
-        // Event Handler: Move to Next Question
-        function moveToNextQuestion() {
-            currentQuestionIndex++;
-            displayQuestion();
-        }
-
-        // Function: End Quiz
-        function endQuiz() {
-            const percentage = Math.round((score / quizQuestions.length) * 100);
-            let grade = '';
-            let message = '';
-            let celebrationEmoji = '';
-            
-            if (percentage >= 90) {
-                grade = 'A+';
-                message = 'Punctuality Master! ⏰';
-                celebrationEmoji = '⏰🏆💼';
-            } else if (percentage >= 80) {
-                grade = 'A';
-                message = 'Time Management Pro! ⭐';
-                celebrationEmoji = '⏰⭐';
-            } else if (percentage >= 70) {
-                grade = 'B';
-                message = 'Professional Achievement! 💼';
-                celebrationEmoji = '⏰';
-            } else if (percentage >= 60) {
-                grade = 'C';
-                message = 'Keep Learning! 📚';
-                celebrationEmoji = '💪';
-            } else {
-                grade = 'D';
-                message = 'Stay Motivated! 🌟';
-                celebrationEmoji = '📖';
+            if (currentQuestion === quizQuestions.length - 1) {
+                finishQuiz();
+                return;
             }
             
-            questionTextEl.textContent = "Quiz Complete! " + celebrationEmoji;
-            choicesContainerEl.innerHTML = `
-                <div style="text-align: center; padding: 3rem; background: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.9) 100%); border-radius: 1.5rem; box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25); border: 3px solid #fbbf24;">
-                    <div style="margin-bottom: 3rem;">
-                        <h2 style="color: #1f2937; margin-bottom: 1.5rem; font-size: 3rem; font-weight: 800; letter-spacing: -0.025em; text-shadow: 0 0 20px rgba(0, 0, 0, 0.1);">Quiz Complete!</h2>
-                        <div style="font-size: 4rem; margin: 1.5rem 0; animation: bounce 2s infinite; filter: drop-shadow(0 0 20px #fbbf24);">${celebrationEmoji}</div>
-                    </div>
-                    
-                    <div style="margin-bottom: 3rem;">
-                        <h3 style="color: #1f2937; margin-bottom: 2rem; font-size: 1.8rem; font-weight: 600; text-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">Your Punctuality Quiz Results</h3>
-                        <div style="display: flex; justify-content: center; align-items: center; gap: 3rem; margin: 3rem 0; flex-wrap: wrap;">
-                            <div style="background: linear-gradient(135deg, #1e40af, #3b82f6); color: white; border-radius: 50%; width: 160px; height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 0 30px rgba(30, 64, 175, 0.2); animation: pulse 2s infinite; position: relative; border: 3px solid #fbbf24;">
-                                <span style="font-size: 3.5rem; font-weight: 800; line-height: 1; text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);">${score}</span>
-                                <span style="font-size: 1.5rem; opacity: 0.9; font-weight: 500;">/ ${quizQuestions.length}</span>
-                            </div>
-                            <div style="text-align: center;">
-                                <div style="font-size: 4rem; font-weight: 800; color: #fbbf24; line-height: 1; margin-bottom: 1rem; background: linear-gradient(135deg, #fbbf24, #059669); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 0 0 30px rgba(251, 191, 36, 0.3);">${percentage}%</div>
-                                <div style="font-size: 2rem; font-weight: 700; color: #fbbf24; background: rgba(251, 191, 36, 0.1); padding: 1rem 2rem; border-radius: 50px; display: inline-block; border: 2px solid #fbbf24; text-shadow: 0 0 10px #fbbf24;">Grade: ${grade}</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="margin: 3rem 0; padding: 3rem; background: linear-gradient(135deg, rgba(248, 250, 252, 0.8) 0%, rgba(241, 245, 249, 0.6) 100%); border-radius: 1.5rem; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); border: 1px solid rgba(30, 64, 175, 0.1); backdrop-filter: blur(10px);">
-                        <h4 style="color: #1f2937; font-size: 2rem; margin-bottom: 1.5rem; font-weight: 700; text-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">${message}</h4>
-                        <p style="font-size: 1.3rem; color: #4b5563; line-height: 1.7; margin: 0; font-style: italic;">You have completed the workplace punctuality quiz! Your understanding of being on time and professional behavior is excellent.</p>
-                    </div>
-                    
-                    <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 3rem; flex-wrap: wrap;">
-                        <button onclick="restartQuiz()" style="color: white; border: none; padding: 1.5rem 2rem; border-radius: 1rem; font-size: 1.2rem; font-weight: 600; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); display: flex; align-items: center; gap: 1rem; position: relative; overflow: hidden; border: 2px solid #fbbf24; background: linear-gradient(135deg, #059669, #047857);">🔄 Take Quiz Again</button>
-                        <button onclick="window.location.reload()" style="color: white; border: none; padding: 1.5rem 2rem; border-radius: 1rem; font-size: 1.2rem; font-weight: 600; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); display: flex; align-items: center; gap: 1rem; position: relative; overflow: hidden; border: 2px solid #fbbf24; background: linear-gradient(135deg, #1e40af, #3b82f6);">🆕 New Session</button>
-                    </div>
-                </div>
-            `;
-            feedbackEl.textContent = '';
-            nextButtonEl.style.display = 'none';
+            currentQuestion++;
+            showQuestion();
+            updateProgress();
         }
 
-        // Restart Quiz Function
-        function restartQuiz() {
-            currentQuestionIndex = 0;
+        // Previous question
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+                updateProgress();
+            }
+        }
+
+        // Finish quiz
+        function finishQuiz() {
+            calculateScore();
+            showResults();
+        }
+
+        // Calculate score
+        function calculateScore() {
             score = 0;
-            answered = false;
-            displayQuestion();
+            quizQuestions.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    score++;
+                }
+            });
         }
 
-        // Audio Functions
-        function enableAudioAndHide() {
-            document.getElementById('audio-overlay').style.display = 'none';
+        // Show results
+        function showResults() {
+            document.getElementById('questionContainer').classList.add('hidden');
+            document.getElementById('scoreDisplay').classList.remove('hidden');
+            
+            document.getElementById('scoreNumber').textContent = score;
+            
+            let message = '';
+            if (score === quizQuestions.length) {
+                message = '🎉 Perfect! You\'re a punctuality expert!';
+            } else if (score >= quizQuestions.length * 0.8) {
+                message = '👍 Great job! You know your workplace etiquette!';
+            } else if (score >= quizQuestions.length * 0.6) {
+                message = '👌 Good effort! Time to brush up on punctuality!';
+            } else {
+                message = '⏰ Better luck next time! Watch the video again!';
+            }
+            
+            document.getElementById('finalMessage').textContent = message;
+            
+            if (audioEnabled) {
+                speak(message);
+            }
         }
 
-        // Initialization
+        // Restart quiz
+        function restartQuiz() {
+            document.getElementById('scoreDisplay').classList.add('hidden');
+            document.getElementById('questionContainer').classList.remove('hidden');
+            initQuiz();
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / quizQuestions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        // Video controls
+        function setupVideo() {
+            const video = document.getElementById('quizVideo');
+            video.addEventListener('load', () => {
+                console.log('Video loaded successfully');
+            });
+        }
+
+        function pauseVideo() {
+            const video = document.getElementById('quizVideo');
+            video.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+        }
+
+        function playVideo() {
+            const video = document.getElementById('quizVideo');
+            video.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        }
+
+        function restartVideo() {
+            const video = document.getElementById('quizVideo');
+            video.src = video.src;
+        }
+
+        // Audio functions
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            const button = document.querySelector('.audio-overlay');
+            button.textContent = audioEnabled ? '⏰' : '🔇';
+            button.title = audioEnabled ? 'Audio Enabled' : 'Audio Disabled';
+        }
+
+        function speak(text) {
+            if (!audioEnabled) return;
+            
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.9;
+                utterance.pitch = 1;
+                utterance.volume = 0.8;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            displayQuestion();
+            console.log('Page loaded, audio enabled:', audioEnabled);
+            console.log('Speech synthesis available:', 'speechSynthesis' in window);
+            initQuiz();
         });
     </script>
 </body>
