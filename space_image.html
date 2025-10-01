@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { margin: 0; padding: 0; background: #000; }
+        .space-image {
+            width: 600px;
+            height: 400px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 25%, #7c3aed 50%, #ec4899 75%, #0f172a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: twinkle 4s ease-in-out infinite alternate;
+        }
+        .planet {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 50%;
+            top: 50px;
+            right: 100px;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        .astronaut {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            top: 200px;
+            left: 150px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+        .astronaut::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #1e293b;
+            border-radius: 50%;
+            top: 5px;
+            left: 10px;
+        }
+        .rocket {
+            position: absolute;
+            width: 30px;
+            height: 60px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 50% 50% 20% 20%;
+            top: 100px;
+            left: 300px;
+            transform: rotate(15deg);
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.6);
+        }
+        .rocket::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 20px;
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+            border-radius: 0 0 50% 50%;
+            bottom: -10px;
+            left: -5px;
+        }
+        .satellite {
+            position: absolute;
+            width: 50px;
+            height: 20px;
+            background: #64748b;
+            border-radius: 10px;
+            top: 80px;
+            left: 400px;
+            box-shadow: 0 0 15px rgba(100, 116, 139, 0.5);
+        }
+        .satellite::before {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 2px;
+            background: #64748b;
+            top: 9px;
+            left: -5px;
+        }
+        .satellite::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 2px;
+            background: #64748b;
+            top: 9px;
+            right: -5px;
+        }
+        .nebula {
+            position: absolute;
+            width: 200px;
+            height: 100px;
+            background: radial-gradient(ellipse, rgba(236, 72, 153, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            top: 250px;
+            right: 50px;
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="space-image">
+        <div class="stars"></div>
+        <div class="planet"></div>
+        <div class="astronaut"></div>
+        <div class="rocket"></div>
+        <div class="satellite"></div>
+        <div class="nebula"></div>
+    </div>
+</body>
+</html>

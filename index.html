@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Action Verb Quiz</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Are You Late? - Workplace Punctuality Quiz</title>
+    <link rel="stylesheet" href="late_style.css">
     </head>
 <body>
     <div class="quiz-container">
         <!-- Audio Enable Overlay -->
         <div id="audio-overlay" class="audio-overlay" style="display: none;">
             <div class="audio-overlay-content">
-                <div class="audio-icon">🔊</div>
+                <div class="audio-icon">⏰</div>
                 <h3>Audio Available</h3>
                 <p>Hover over choice cards to hear pronunciation!</p>
                 <button onclick="enableAudioAndHide()" class="enable-audio-btn">
@@ -26,10 +26,10 @@
             <div class="header-content">
                 <div class="title-section">
                     <h1 class="quiz-title">
-                        <span class="title-icon">⚡</span>
-                        Action Verbs Quiz
+                        <span class="title-icon">⏰</span>
+                        Are You Late? Quiz
                     </h1>
-                    <p class="quiz-subtitle">Master action verbs through visual learning</p>
+                    <p class="quiz-subtitle">Test your knowledge about workplace punctuality and excuses</p>
                 </div>
                 <div class="progress-section">
                     <div class="progress-indicator">
@@ -49,13 +49,25 @@
         <!-- Main Content Grid -->
         <main class="quiz-main">
             <div class="content-grid">
-                <!-- Image Section -->
-                <section class="image-section">
-                    <div class="image-wrapper">
-                        <div class="image-container">
-                            <img src="quiz_image.jpg.png" alt="Quiz Image" class="context-image" id="quiz-image" onclick="toggleZoom()">
-                            <div class="image-overlay">
-                                <div class="image-caption">Look at the image and identify the action verb</div>
+                <!-- Video Section -->
+                <section class="video-section">
+                    <div class="video-wrapper">
+                        <div class="video-container">
+                            <iframe 
+                                id="quiz-video"
+                                src="https://www.youtube.com/embed/mCS6_G5hOKU?autoplay=0&controls=1&showinfo=0&rel=0&modestbranding=1"
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen
+                                class="context-video">
+                            </iframe>
+                            <div class="video-overlay">
+                                <div class="video-caption">Watch the video about being late to work</div>
+                                <div class="video-controls">
+                                    <button onclick="playVideo()" class="video-btn play-btn">▶️ Play</button>
+                                    <button onclick="pauseVideo()" class="video-btn pause-btn">⏸️ Pause</button>
+                                    <button onclick="restartVideo()" class="video-btn restart-btn">🔄 Restart</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -86,85 +98,97 @@
     </div>
 
     <script>
-        // --- 1. Quiz Data Structure with AI Feedback ---
+        // --- 1. Quiz Data Structure - Being Late Theme ---
         const quizQuestions = [
             { 
-                question: "They are ______ in the water.", 
-                choices: ["swimming", "painting"], 
-                answer: "swimming",
-                explanation: "Swimming is an action verb that describes the movement in water. When people are in water moving their arms and legs to stay afloat and move forward, they are swimming.",
-                wrongFeedback: "Painting is also an action verb, but it involves using brushes and colors to create art, not moving through water.",
-                explanationPT: "Nadar é um verbo de ação que descreve o movimento na água. Quando as pessoas estão na água movendo os braços e pernas para flutuar e se mover para frente, elas estão nadando.",
-                wrongFeedbackPT: "Pintar também é um verbo de ação, mas envolve usar pincéis e cores para criar arte, não se mover pela água."
+                question: "What is the video about?", 
+                choices: ["being late", "being on time"], 
+                answer: "being late",
+                explanation: "The video focuses on the topic of being late to work and the various excuses people use. It explores workplace punctuality issues and their consequences.",
+                wrongFeedback: "While being on time is important, this video specifically examines the problem of being late and the excuses people make.",
+                explanationPT: "O vídeo foca no tópico de chegar atrasado ao trabalho e nas várias desculpas que as pessoas usam. Explora questões de pontualidade no local de trabalho e suas consequências.",
+                wrongFeedbackPT: "Embora ser pontual seja importante, este vídeo examina especificamente o problema de chegar atrasado e as desculpas que as pessoas inventam."
             },
             { 
-                question: "They are ______ on the grass.", 
-                choices: ["eating", "sleeping"], 
-                answer: "eating",
-                explanation: "Eating is an action verb that describes consuming food. When people have food in their hands and are putting it in their mouths, they are eating.",
-                wrongFeedback: "Sleeping is an action verb, but it means resting with eyes closed. These people are actively consuming food, not resting.",
-                explanationPT: "Comer é um verbo de ação que descreve consumir comida. Quando as pessoas têm comida nas mãos e estão colocando na boca, elas estão comendo.",
-                wrongFeedbackPT: "Dormir também é um verbo de ação, mas significa descansar com os olhos fechados. Essas pessoas estão ativamente consumindo comida, não descansando."
+                question: "What percentage of employees are late to work at least once a month?", 
+                choices: ["10%", "30%"], 
+                answer: "30%",
+                explanation: "According to the video, 30% of employees are late to work at least once a month. This shows that lateness is a common workplace issue.",
+                wrongFeedback: "10% would be a very low number. The actual statistic shows that 30% of employees struggle with punctuality at least monthly.",
+                explanationPT: "Segundo o vídeo, 30% dos funcionários chegam atrasados ao trabalho pelo menos uma vez por mês. Isso mostra que o atraso é um problema comum no local de trabalho.",
+                wrongFeedbackPT: "10% seria um número muito baixo. A estatística real mostra que 30% dos funcionários lutam com pontualidade pelo menos mensalmente."
             },
             { 
-                question: "The dogs are ______.", 
-                choices: ["running", "drawing"], 
-                answer: "running",
-                explanation: "Running is an action verb that describes fast movement on legs. Dogs running means they are moving quickly across the ground using their four legs.",
-                wrongFeedback: "Drawing is an action verb, but it involves creating art with pencils or crayons. Dogs don't draw - they move around by running.",
-                explanationPT: "Correr é um verbo de ação que descreve movimento rápido nas pernas. Cachorros correndo significa que eles estão se movendo rapidamente pelo chão usando suas quatro patas.",
-                wrongFeedbackPT: "Desenhar também é um verbo de ação, mas envolve criar arte com lápis ou giz de cera. Cachorros não desenham - eles se movem correndo."
+                question: "What is the most common excuse for being late?", 
+                choices: ["traffic", "sick"], 
+                answer: "traffic",
+                explanation: "Traffic is the most common excuse people give for being late to work. It's a convenient excuse that's hard to verify.",
+                wrongFeedback: "While being sick is a valid reason, traffic is actually the most frequently used excuse for lateness.",
+                explanationPT: "Trânsito é a desculpa mais comum que as pessoas dão para chegar atrasadas ao trabalho. É uma desculpa conveniente que é difícil de verificar.",
+                wrongFeedbackPT: "Embora estar doente seja uma razão válida, o trânsito é na verdade a desculpa mais frequentemente usada para atrasos."
             },
             { 
-                question: "She is ______ off the dock.", 
-                choices: ["diving", "sitting"], 
-                answer: "diving",
-                explanation: "Diving is an action verb that describes jumping headfirst into water. When someone jumps off a dock into water with their arms extended, they are diving.",
-                wrongFeedback: "Sitting is an action verb, but it means being in a seated position. This person is jumping into the water, not sitting down.",
-                explanationPT: "Mergulhar é um verbo de ação que descreve pular de cabeça na água. Quando alguém pula de um cais na água com os braços estendidos, ela está mergulhando.",
-                wrongFeedbackPT: "Sentar também é um verbo de ação, mas significa estar em posição sentada. Esta pessoa está pulando na água, não sentando."
+                question: "In New York, what excuse do people often give for being late?", 
+                choices: ["the subway", "the weather"], 
+                answer: "the subway",
+                explanation: "In New York, people often blame the subway system for their lateness. Subway delays are a common occurrence in the city.",
+                wrongFeedback: "While weather can affect travel, New Yorkers specifically blame subway problems for their lateness more often.",
+                explanationPT: "Em Nova York, as pessoas frequentemente culpam o sistema de metrô por seus atrasos. Atrasos no metrô são uma ocorrência comum na cidade.",
+                wrongFeedbackPT: "Embora o clima possa afetar a viagem, os nova-iorquinos especificamente culpam problemas do metrô por seus atrasos com mais frequência."
             },
             { 
-                question: "The turtle is ______ in the dirt.", 
-                choices: ["digging", "sleeping"], 
-                answer: "digging",
-                explanation: "Digging is an action verb that describes using claws or tools to move earth. Turtles dig holes in dirt to find food or create nests.",
-                wrongFeedback: "Sleeping is an action verb, but it means resting. This turtle is actively moving dirt around, not resting."
+                question: "What percentage blame oversleeping?", 
+                choices: ["10%", "30%"], 
+                answer: "more than 30%",
+                explanation: "More than 30% of people blame oversleeping for being late. This shows that poor time management and sleep habits contribute to lateness.",
+                wrongFeedback: "The actual percentage is higher than 30%. Oversleeping is a major cause of workplace lateness.",
+                explanationPT: "Mais de 30% das pessoas culpam o excesso de sono por chegar atrasadas. Isso mostra que o gerenciamento inadequado do tempo e hábitos de sono contribuem para o atraso.",
+                wrongFeedbackPT: "A porcentagem real é maior que 30%. O excesso de sono é uma das principais causas de atraso no trabalho."
             },
             { 
-                question: "The children are ______ sandwiches.", 
-                choices: ["eating", "throwing"], 
-                answer: "eating",
-                explanation: "Eating is an action verb that describes consuming food. When children have sandwiches in their hands and are putting them in their mouths, they are eating.",
-                wrongFeedback: "Throwing is an action verb, but it means launching something through the air. These children are consuming food, not throwing it away."
+                question: "What unusual animal was used in an excuse?", 
+                choices: ["dog", "turtle"], 
+                answer: "turtle",
+                explanation: "Someone used a turtle as an excuse for being late. This is an unusual and creative excuse that was mentioned in the video.",
+                wrongFeedback: "While dogs are common pets, a turtle was the unusual animal mentioned as an excuse for lateness.",
+                explanationPT: "Alguém usou uma tartaruga como desculpa para chegar atrasado. Esta é uma desculpa incomum e criativa que foi mencionada no vídeo.",
+                wrongFeedbackPT: "Embora os cães sejam animais de estimação comuns, uma tartaruga foi o animal incomum mencionado como desculpa para atraso."
             },
             { 
-                question: "The sun is ______ brightly.", 
-                choices: ["shining", "hiding"], 
-                answer: "shining",
-                explanation: "Shining is an action verb that describes giving off bright light. The sun shines when it emits bright, warm light during the day.",
-                wrongFeedback: "Hiding is an action verb, but it means concealing or being out of sight. The sun is visible and giving off light, not hiding."
+                question: "What did someone blame for being late: their mother-in-law or the president?", 
+                choices: ["mother-in-law", "president"], 
+                answer: "mother-in-law",
+                explanation: "Someone actually blamed their mother-in-law for being late to work. This shows how creative people can get with their excuses.",
+                wrongFeedback: "While blaming the president might seem extreme, someone actually blamed their mother-in-law for their lateness.",
+                explanationPT: "Alguém realmente culpou sua sogra por chegar atrasado ao trabalho. Isso mostra como as pessoas podem ser criativas com suas desculpas.",
+                wrongFeedbackPT: "Embora culpar o presidente possa parecer extremo, alguém realmente culpou sua sogra por seu atraso."
             },
             { 
-                question: "The dogs are ______ around the park.", 
-                choices: ["playing", "sleeping"], 
-                answer: "playing",
-                explanation: "Playing is an action verb that describes engaging in fun activities. Dogs playing means they are running around, jumping, and having fun together.",
-                wrongFeedback: "Sleeping is an action verb, but it means resting. These dogs are actively moving and having fun, not resting."
+                question: "What sport was mentioned as a reason for being late?", 
+                choices: ["soccer", "baseball"], 
+                answer: "soccer",
+                explanation: "Soccer was mentioned as a reason for being late. People sometimes use sports-related excuses for their workplace lateness.",
+                wrongFeedback: "While baseball is popular, soccer was the sport specifically mentioned as an excuse for being late.",
+                explanationPT: "Futebol foi mencionado como uma razão para chegar atrasado. As pessoas às vezes usam desculpas relacionadas ao esporte para seus atrasos no trabalho.",
+                wrongFeedbackPT: "Embora o beisebol seja popular, o futebol foi o esporte especificamente mencionado como desculpa para chegar atrasado."
             },
             { 
-                question: "The children are ______ near the water.", 
-                choices: ["playing", "studying"], 
-                answer: "playing",
-                explanation: "Playing is an action verb that describes engaging in fun activities. Children playing means they are running around, laughing, and having fun together.",
-                wrongFeedback: "Studying is an action verb, but it means learning from books or materials. These children are having fun outdoors, not studying."
+                question: "How do some people make up for being late?", 
+                choices: ["leave early", "stay longer"], 
+                answer: "stay longer",
+                explanation: "Some people try to make up for being late by staying longer at work. This is an attempt to compensate for their tardiness.",
+                wrongFeedback: "Leaving early would make the situation worse. People who are late often try to compensate by staying longer.",
+                explanationPT: "Algumas pessoas tentam compensar por chegar atrasadas ficando mais tempo no trabalho. Esta é uma tentativa de compensar por sua demora.",
+                wrongFeedbackPT: "Sair mais cedo pioraria a situação. Pessoas que chegam atrasadas frequentemente tentam compensar ficando mais tempo."
             },
             { 
-                question: "Someone is ______ a ball.", 
-                choices: ["throwing", "eating"], 
-                answer: "throwing",
-                explanation: "Throwing is an action verb that describes launching something through the air using your arm. When someone uses their arm to send a ball through the air, they are throwing it.",
-                wrongFeedback: "Eating is an action verb, but it means consuming food. You can't eat a ball - you throw it to play games."
+                question: "What do 40% of bosses do to employees who are often late?", 
+                choices: ["give a raise", "fire them"], 
+                answer: "fire them",
+                explanation: "40% of bosses fire employees who are often late. This shows the serious consequences of chronic lateness in the workplace.",
+                wrongFeedback: "Bosses don't reward lateness with raises. 40% of bosses actually fire employees who are consistently late.",
+                explanationPT: "40% dos chefes demitem funcionários que frequentemente chegam atrasados. Isso mostra as sérias consequências do atraso crônico no local de trabalho.",
+                wrongFeedbackPT: "Chefes não recompensam atrasos com aumentos. 40% dos chefes realmente demitem funcionários que consistentemente chegam atrasados."
             },
         ];
 
@@ -307,7 +331,7 @@
             audioEnabled = !audioEnabled;
             const audioBtn = document.getElementById('audio-btn');
             if (audioEnabled) {
-                audioBtn.textContent = '🔊 Audio On';
+                audioBtn.textContent = '🚀 Audio On';
                 audioBtn.style.background = '#28a745';
             } else {
                 audioBtn.textContent = '🔇 Audio Off';
@@ -331,9 +355,9 @@
                 speakText("Excellent! " + correctAnswer, 'en-US');
                 feedbackEl.innerHTML = `
                     <div class="feedback-correct">
-                        <div class="feedback-header">✅ <strong>Excellent!</strong></div>
+                        <div class="feedback-header">⏰ <strong>Excellent!</strong></div>
                         <div class="feedback-explanation">${currentQ.explanation}</div>
-                        <div class="feedback-reinforcement">You correctly identified the action verb! This shows you understand how verbs describe actions.</div>
+                        <div class="feedback-reinforcement">You correctly answered about workplace punctuality! This shows you understand the importance of being on time.</div>
                     </div>
                 `;
                 score++;
@@ -344,10 +368,10 @@
                 speakText("The correct answer is " + correctAnswer, 'en-US');
                 feedbackEl.innerHTML = `
                     <div class="feedback-incorrect">
-                        <div class="feedback-header">❌ <strong>Let's learn together!</strong></div>
+                        <div class="feedback-header">⏰ <strong>Let's learn together!</strong></div>
                         <div class="feedback-wrong">Your answer: "<strong>${selectedAnswer}</strong>" - ${currentQ.wrongFeedback}</div>
                         <div class="feedback-correct-answer">Correct answer: "<strong>${correctAnswer}</strong>" - ${currentQ.explanation}</div>
-                        <div class="feedback-reinforcement">💡 <strong>Remember:</strong> Action verbs describe what someone or something is doing. Look at the image carefully to see what action is happening!</div>
+                        <div class="feedback-reinforcement">💼 <strong>Remember:</strong> Workplace punctuality is important! Being on time shows professionalism and respect for others.</div>
                     </div>
                 `;
                 
@@ -384,28 +408,28 @@
             // Grade calculation with enhanced messages
             if (percentage >= 90) {
                 grade = 'A+';
-                message = 'Outstanding Performance! 🌟';
-                supportingMessage = 'You have mastered action verbs! Your understanding is exceptional and you can identify different actions with confidence. Keep up the excellent work!';
-                celebrationEmoji = '🎉🏆🎊';
+                message = 'Punctuality Master! ⏰';
+                supportingMessage = 'You have mastered workplace punctuality concepts! Your understanding of being on time and workplace etiquette is excellent. You\'re ready for any professional environment!';
+                celebrationEmoji = '⏰🏆💼';
             } else if (percentage >= 80) {
                 grade = 'A';
-                message = 'Excellent Work! 👏';
-                supportingMessage = 'You have a strong grasp of action verbs! You can clearly identify and understand different actions. You\'re doing great!';
-                celebrationEmoji = '🎉🎊';
+                message = 'Time Management Pro! ⭐';
+                supportingMessage = 'You have a strong grasp of workplace punctuality! You clearly understand the importance of being on time and professional behavior. You\'re doing great!';
+                celebrationEmoji = '⏰⭐';
             } else if (percentage >= 70) {
                 grade = 'B';
-                message = 'Good Job! 👍';
-                supportingMessage = 'You have a solid understanding of action verbs! You\'re on the right track and with a bit more practice, you\'ll master them completely.';
-                celebrationEmoji = '🎉';
+                message = 'Professional Achievement! 💼';
+                supportingMessage = 'You have a solid understanding of workplace punctuality! You\'re on the right track and with a bit more practice, you\'ll master professional time management completely.';
+                celebrationEmoji = '⏰';
             } else if (percentage >= 60) {
                 grade = 'C';
-                message = 'Nice Try! 📚';
-                supportingMessage = 'You\'re making progress with action verbs! Keep practicing and reviewing - you\'ll get better with each attempt. Don\'t give up!';
+                message = 'Keep Learning! 📚';
+                supportingMessage = 'You\'re making progress with workplace punctuality! Keep studying professional behavior and time management - you\'ll get better with each attempt. Don\'t give up!';
                 celebrationEmoji = '💪';
             } else {
                 grade = 'D';
-                message = 'Keep Learning! 💪';
-                supportingMessage = 'Action verbs can be tricky, but don\'t worry! Every expert was once a beginner. Practice makes perfect - try again and you\'ll improve!';
+                message = 'Stay Motivated! 🌟';
+                supportingMessage = 'Workplace punctuality can be challenging, but don\'t worry! Every professional was once a beginner. Practice makes perfect - try again and you\'ll improve your time management skills!';
                 celebrationEmoji = '📖';
             }
             
@@ -413,12 +437,12 @@
             choicesContainerEl.innerHTML = `
                 <div class="final-results">
                     <div class="congratulations">
-                        <h2>Congratulations!</h2>
+                        <h2>Quiz Complete!</h2>
                         <div class="celebration">${celebrationEmoji}</div>
                     </div>
                     
                     <div class="results-summary">
-                        <h3>Your Results</h3>
+                        <h3>Your Punctuality Quiz Results</h3>
                         <div class="score-display">
                             <div class="score-circle">
                                 <span class="score-number">${score}</span>
@@ -446,43 +470,25 @@
             nextButtonEl.style.display = 'none';
         }
 
-        // --- 9. Image Enhancement Functions ---
-        let isEnhanced = false;
-        let isZoomed = false;
-
-        function enhanceImage() {
-            const img = document.getElementById('quiz-image');
-            if (!isEnhanced) {
-                img.style.filter = 'contrast(1.4) brightness(1.15) saturate(1.4) hue-rotate(3deg)';
-                img.style.transform = 'scale(1.05)';
-                img.style.transition = 'all 0.3s ease';
-                isEnhanced = true;
-            } else {
-                resetImage();
+        // --- 9. Video Control Functions ---
+        function pauseVideo() {
+            const video = document.getElementById('quiz-video');
+            if (video && video.contentWindow) {
+                video.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
             }
         }
 
-        function resetImage() {
-            const img = document.getElementById('quiz-image');
-            img.style.filter = 'contrast(1.2) brightness(1.1) saturate(1.2) hue-rotate(2deg)';
-            img.style.transform = 'scale(1)';
-            img.style.transition = 'all 0.3s ease';
-            isEnhanced = false;
-            isZoomed = false;
+        function playVideo() {
+            const video = document.getElementById('quiz-video');
+            if (video && video.contentWindow) {
+                video.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            }
         }
 
-        function toggleZoom() {
-            const img = document.getElementById('quiz-image');
-            if (!isZoomed) {
-                img.style.transform = 'scale(1.5)';
-                img.style.cursor = 'zoom-out';
-                img.style.transition = 'all 0.3s ease';
-                isZoomed = true;
-            } else {
-                img.style.transform = isEnhanced ? 'scale(1.05)' : 'scale(1)';
-                img.style.cursor = 'zoom-in';
-                img.style.transition = 'all 0.3s ease';
-                isZoomed = false;
+        function restartVideo() {
+            const video = document.getElementById('quiz-video');
+            if (video && video.contentWindow) {
+                video.contentWindow.postMessage('{"event":"command","func":"seekTo","args":"0,true"}', '*');
             }
         }
 
@@ -494,21 +500,27 @@
             displayQuestion();
         }
 
-        // --- 11. High Quality Image Loading ---
-        function loadHighQualityImage() {
-            const img = document.getElementById('quiz-image');
-            img.onload = function() {
-                // Force high quality rendering after load
-                this.style.imageRendering = 'high-quality';
-                this.style.imageRendering = '-webkit-optimize-contrast';
-            };
+        // --- 11. Video Loading and Setup ---
+        function setupVideo() {
+            const video = document.getElementById('quiz-video');
+            if (video) {
+                // Add event listeners for video events
+                video.addEventListener('load', function() {
+                    console.log('Video loaded successfully');
+                });
+                
+                // Ensure video is ready for interaction
+                video.addEventListener('loadstart', function() {
+                    console.log('Video loading started');
+                });
+            }
         }
 
-        // --- 11. Initialization ---
+        // --- 12. Initialization ---
         nextButtonEl.addEventListener('click', moveToNextQuestion);
         document.addEventListener('DOMContentLoaded', function() {
             displayQuestion();
-            loadHighQualityImage();
+            setupVideo();
             
             console.log('Page loaded, audio enabled:', audioEnabled);
             console.log('Speech synthesis available:', 'speechSynthesis' in window);

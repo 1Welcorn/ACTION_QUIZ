@@ -1,0 +1,19 @@
+{
+  "name": "are-you-late-quiz",
+  "version": "1.0.0",
+  "description": "Interactive workplace punctuality quiz with YouTube video integration",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "keywords": [
+    "quiz",
+    "education",
+    "workplace",
+    "punctuality",
+    "english-learning"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}

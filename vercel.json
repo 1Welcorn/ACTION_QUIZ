@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "name": "are-you-late-quiz",
+  "builds": [
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
