@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEBUG - Are You Late Quiz</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e40af 0%, #059669 100%);
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            color: #333;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .title {
+            font-size: 3rem;
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        .video-section {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 3px solid #fbbf24;
+        }
+        .question-section {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid #fbbf24;
+        }
+        .debug-info {
+            background: #e0f2fe;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #0288d1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">⏰ DEBUG - Are You Late? Quiz</h1>
+            <p class="subtitle">Testing if styles are loading correctly</p>
+        </div>
+        
+        <div class="video-section">
+            <h3>Video Section</h3>
+            <p>This should have a blue background and gold border</p>
+            <iframe 
+                width="560" 
+                height="315" 
+                src="https://www.youtube.com/embed/mCS6_G5hOKU" 
+                frameborder="0" 
+                allowfullscreen>
+            </iframe>
+        </div>
+        
+        <div class="question-section">
+            <h3>Question Section</h3>
+            <p>This should have a light blue background and gold left border</p>
+            <p><strong>Question 1:</strong> What is the video about?</p>
+            <button style="background: #1e40af; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin: 5px;">being late</button>
+            <button style="background: #1e40af; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin: 5px;">being on time</button>
+        </div>
+        
+        <div class="debug-info">
+            <h4>Debug Information:</h4>
+            <p><strong>If you can see this styled correctly:</strong></p>
+            <ul>
+                <li>✅ Blue gradient background</li>
+                <li>✅ White container with rounded corners</li>
+                <li>✅ Blue title text</li>
+                <li>✅ Video section with gold border</li>
+                <li>✅ Question section with gold left border</li>
+                <li>✅ Blue debug info box</li>
+            </ul>
+            <p><strong>Then the CSS is working!</strong></p>
+        </div>
+    </div>
+</body>
+</html>
