@@ -87,24 +87,90 @@
         .video-controls {
             display: flex;
             justify-content: center;
-            gap: 1rem;
-            margin-top: 1rem;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
         }
         
         .video-btn {
-            background: #1e40af;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
             color: white;
             border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
+            padding: 0.9rem 1.8rem;
+            border-radius: 12px;
             cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .video-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
         }
         
         .video-btn:hover {
-            background: #1e3a8a;
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(30, 64, 175, 0.4);
+        }
+        
+        .video-btn:hover::before {
+            left: 100%;
+        }
+        
+        .video-btn:active {
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+        }
+        
+        .video-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.3);
+        }
+        
+        .video-btn.pause-btn {
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+        
+        .video-btn.pause-btn:hover {
+            background: linear-gradient(135deg, #d97706 0%, #ea580c 100%);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+        }
+        
+        .video-btn.play-btn {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+        }
+        
+        .video-btn.play-btn:hover {
+            background: linear-gradient(135deg, #047857 0%, #059669 100%);
+            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
+        }
+        
+        .video-btn.restart-btn {
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+        }
+        
+        .video-btn.restart-btn:hover {
+            background: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
         }
         
         .quiz-content {
@@ -448,11 +514,11 @@
                         allowfullscreen>
                     </iframe>
                 </div>
-                <div class="video-controls">
-                    <button class="video-btn" onclick="pauseVideo()">⏸️ Pause</button>
-                    <button class="video-btn" onclick="playVideo()">▶️ Play</button>
-                    <button class="video-btn" onclick="restartVideo()">🔄 Restart</button>
-                </div>
+            <div class="video-controls">
+                <button class="video-btn pause-btn" onclick="pauseVideo()">⏸️ Pause</button>
+                <button class="video-btn play-btn" onclick="playVideo()">▶️ Play</button>
+                <button class="video-btn restart-btn" onclick="restartVideo()">🔄 Restart</button>
+            </div>
             </div>
 
             <div class="quiz-section">
