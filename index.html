@@ -49,10 +49,22 @@
             font-weight: 400;
         }
         
-        .video-section {
-            background: #f8fafc;
+        .main-content {
+            display: flex;
+            gap: 2rem;
             padding: 2rem;
+            background: #f8fafc;
             border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .video-section {
+            flex: 1;
+            min-width: 400px;
+        }
+        
+        .quiz-section {
+            flex: 1;
+            min-width: 400px;
         }
         
         .video-container {
@@ -334,6 +346,16 @@
                 font-size: 1rem;
             }
             
+            .main-content {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .video-section, .quiz-section {
+                min-width: auto;
+            }
+            
             .video-container iframe {
                 height: 250px;
             }
@@ -367,35 +389,40 @@
             <p class="quiz-subtitle">Test your knowledge about workplace punctuality and excuses</p>
         </div>
 
-        <div class="video-section">
-            <div class="video-container">
-                <iframe 
-                    id="quizVideo"
-                    src="https://www.youtube.com/embed/mCS6_G5hOKU" 
-                    frameborder="0" 
-                    allowfullscreen>
-                </iframe>
+        <div class="main-content">
+            <div class="video-section">
+                <div class="video-container">
+                    <iframe 
+                        id="quizVideo"
+                        src="https://www.youtube.com/embed/mCS6_G5hOKU" 
+                        frameborder="0" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-controls">
+                    <button class="video-btn" onclick="pauseVideo()">⏸️ Pause</button>
+                    <button class="video-btn" onclick="playVideo()">▶️ Play</button>
+                    <button class="video-btn" onclick="restartVideo()">🔄 Restart</button>
+                </div>
             </div>
-            <div class="video-controls">
-                <button class="video-btn" onclick="pauseVideo()">⏸️ Pause</button>
-                <button class="video-btn" onclick="playVideo()">▶️ Play</button>
-                <button class="video-btn" onclick="restartVideo()">🔄 Restart</button>
+
+            <div class="quiz-section">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+
+                <div id="questionContainer" class="question-section">
+                    <div class="question-text" id="questionText"></div>
+                    <div class="choices-container" id="choicesContainer"></div>
+                    <div class="feedback-section" id="feedbackSection">
+                        <div class="feedback-text" id="feedbackText"></div>
+                        <div class="explanation-text" id="explanationText"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="quiz-content">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-
-            <div id="questionContainer" class="question-section">
-                <div class="question-text" id="questionText"></div>
-                <div class="choices-container" id="choicesContainer"></div>
-                <div class="feedback-section" id="feedbackSection">
-                    <div class="feedback-text" id="feedbackText"></div>
-                    <div class="explanation-text" id="explanationText"></div>
-                </div>
-            </div>
 
             <div class="controls">
                 <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>← Previous</button>
